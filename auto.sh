@@ -1,0 +1,2 @@
+#!/bin/zsh
+B="$HOME/Ext";mkdir -p "$B";L="$B/.auto_copy.log";alias g='ls /Volumes/ 2>/dev/null|grep -v "^Macintosh HD$"|grep -v "^com.apple"|grep -v "^Preboot$"|grep -v "^Recovery$"|grep -v "^VM$"|grep -v "^Update$"';S=$(g);while true;do C=$(g);while IFS= read -r v;do if [[ -n "$v" ]] && ! echo "$S"|grep -q "^${v}$";then echo "$v";if rsync -av --progress "/Volumes/$v/" "$B/${v}_$(date '+%Y%m%d_%H%M%S')/" >> "$L" 2>&1;then echo "V";else echo "X";fi;S="$C";fi;done<<<"$C";S="$C";sleep 1;done
